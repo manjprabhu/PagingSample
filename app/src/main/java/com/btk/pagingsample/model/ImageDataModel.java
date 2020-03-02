@@ -248,4 +248,20 @@ public class ImageDataModel {
         this.userImageURL = userImageURL;
     }
 
+    public boolean equals(Object o) {
+        if(o == this) {
+            return true;
+        }
+        if(!(o instanceof ImageDataModel)) {
+            return false;
+        }
+
+        if(((ImageDataModel) o).getLargeImageURL().equalsIgnoreCase(this.largeImageURL)) {
+            return true;
+        }
+        return false;
+
+    }
+
+
 }

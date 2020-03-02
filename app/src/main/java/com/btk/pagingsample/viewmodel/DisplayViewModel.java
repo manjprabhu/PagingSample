@@ -1,31 +1,37 @@
 package com.btk.pagingsample.viewmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PageKeyedDataSource;
 import androidx.paging.PagedList;
 
-import com.btk.pagingsample.datasource.ImageDataSourcFactory;
+import com.btk.pagingsample.datasource.ImageDataSourceFactory;
 import com.btk.pagingsample.datasource.ImageDataSource;
 import com.btk.pagingsample.model.ImageDataModel;
 
 public class DisplayViewModel extends ViewModel {
 
-    private LiveData<PagedList<ImageDataModel>> liveData;
+    public LiveData<PagedList<ImageDataModel>> pagedList;
 
     private final String TAG = DisplayViewModel.class.getSimpleName();
 
     public DisplayViewModel() {
-        ImageDataSourcFactory dataSourceFactory = new ImageDataSourcFactory();
+        Log.v(TAG,"==>> getAllImages");
+        ImageDataSourceFactory dataSourceFactory = new ImageDataSourceFactory();
 
-        PagedList.Config config = new PagedList.Config.Builder()
+        PagedList.Config config = (new PagedList.Config.Builder())
                  .setEnablePlaceholders(false)
                 .setPageSize(ImageDataSource.PAGE_SIZE).build();
 
-        liveData = (new LivePagedListBuilder(dataSourceFactory,config)).build();
+        pagedList = new LivePagedListBuilder(dataSourceFactory,config).build();
+        Log.v(TAG,"==>>liveData:"+pagedList);
     }
 
     public LiveData<PagedList<ImageDataModel>> getAllImages() {
-        return liveData;
+        Log.v(TAG,"==>> getAllImages");
+        return pagedList;
     }
 }
